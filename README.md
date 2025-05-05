@@ -103,6 +103,24 @@ pip install -r requirements.txt
 - Sempre valide o conteúdo dos datasets antes de treinar ou inferir.
 - Atenção ao idioma, formato e integridade dos arquivos de áudio.
 
+### 5. **Limitações dos Modelos TTS**
+- **Bark (suno/bark-small)**:
+  - Limitação de duração: aproximadamente 14 segundos por geração
+  - Limitação de tokens: por padrão, gera até 50 tokens (pode ser ajustado com `max_new_tokens`)
+  - Para textos longos, é necessário dividir em segmentos menores
+  - Qualidade pode variar dependendo do idioma e do preset de voz escolhido
+- **MMS-TTS (facebook/mms-tts-por)**:
+  - Melhor para textos em português
+  - Mais rápido que o Bark
+  - Menos natural que o Bark
+  - Também tem limitações de tamanho de texto
+
+### 6. **Estratégias para Textos Longos**
+- Dividir o texto em segmentos menores (frases ou parágrafos)
+- Gerar áudio para cada segmento
+- Concatenar os áudios usando bibliotecas como `soundfile` ou `librosa`
+- Ajustar o parâmetro `max_new_tokens` conforme necessário
+
 ---
 
 ## Tabela Comparativa dos Scripts
@@ -114,10 +132,10 @@ pip install -r requirements.txt
 | projeto_02_01.py   | Microfone + Whisper             | Gravação/Classificação  | Microfone               | Predições               | Necessita microfone                 |
 | projeto_03.py      | MINDS-14 + Whisper              | Reconhecimento de fala  | Dataset                 | Texto transcrito        |                                     |
 | projeto_03_01.py   | Microfone + Whisper             | Gravação/Transcrição    | Microfone               | Texto transcrito        | Necessita microfone                 |
-| projeto_04.py      | MMS-TTS                         | Texto para fala         | Texto                   | Áudio                   |                                     |
-| projeto_04_01.py   | Bark                            | Texto para fala         | Texto                   | Áudio                   |                                     |
-| projeto_04_02.py   | Bark (GPU)                      | Texto para fala         | Texto                   | Áudio                   | Otimizado para GPU                  |
-| projeto_04_03.py   | Bark (baixo nível, GPU)         | Texto para fala         | Texto                   | Áudio                   | Otimizações avançadas               |
+| projeto_04.py      | MMS-TTS                         | Texto para fala         | Texto                   | Áudio                   | Melhor para português               |
+| projeto_04_01.py   | Bark                            | Texto para fala         | Texto                   | Áudio                   | Limite de ~14s por geração          |
+| projeto_04_02.py   | Bark (GPU)                      | Texto para fala         | Texto                   | Áudio                   | Otimizado para GPU, limite de ~14s  |
+| projeto_04_03.py   | Bark (baixo nível, GPU)         | Texto para fala         | Texto                   | Áudio                   | Otimizações avançadas, limite de ~14s|
 
 ---
 
