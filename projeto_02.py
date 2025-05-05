@@ -11,6 +11,8 @@ pasta_saida.mkdir(exist_ok=True)
 
 nome_dataset = "google/fleurs"
 lingua_dataset = "pt_br"
+
+# O streaming=True permite rodar apenas uma instancia sem baixar  o dataset completo
 dados = load_dataset(nome_dataset, name=lingua_dataset,
                      split='train', streaming=True)
 
@@ -28,3 +30,28 @@ classificador = pipeline('audio-classification', model=modelo)
 classificador
 
 classificador.feature_extractor.sampling_rate
+
+primeiras_linhas = list(primeiras_linhas)
+
+for linha in primeiras_linhas:
+    predicao = classificador(linha['audio']['array'])
+
+    # display(predicao)
+
+
+##################################
+# Test completo
+
+
+nome_dataset = "google/fleurs"
+lingua_dataset = "pt_br"
+dados = load_dataset(nome_dataset, name=lingua_dataset,
+                     split='train', streaming=True)
+
+modelo = 'sanchit-gandhi/whisper-medium-fleurs-lang-id'
+classificador = pipeline('audio-classification', model=modelo)
+
+for linha in dados.take(5):
+    predicao = classificador(linha["audio"]["array"])
+    print(predicao)
+    print('-----')
