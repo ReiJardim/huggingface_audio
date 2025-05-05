@@ -1,0 +1,9 @@
+transformers
+datasets
+torch
+librosa
+matplotlib
+soundfile
+sounddevice
+ipython
+numpy 
